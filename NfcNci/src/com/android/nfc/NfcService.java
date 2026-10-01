@@ -322,7 +322,7 @@ public class NfcService implements DeviceHostListener, ForegroundUtils.Callback 
     static final int ROUTING_WATCHDOG_MS = 6000;
 
     // Default delay used for presence checks
-    static final int DEFAULT_PRESENCE_CHECK_DELAY = 125;
+    static final int DEFAULT_PRESENCE_CHECK_DELAY = 1000;
 
     // Removal Detection Wait Time Range
     static final int MIN_RF_REMOVAL_DETECTION_TIMEOUT = 0x00;
