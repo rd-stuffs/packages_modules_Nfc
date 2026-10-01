@@ -25,6 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -1052,7 +1053,7 @@ public final class NfcDispatcherTest {
         // Setup a pending intent that will fail by throwing CanceledException.
         PendingIntent pendingIntent = mock(PendingIntent.class);
         doThrow(new CanceledException()).when(pendingIntent)
-                .send(any(Context.class), anyInt(), any(Intent.class));
+                .send(any(Context.class), anyInt(), any(Intent.class), any(), any(), any(), any());
 
         // Setup a tag with an NDEF message to trigger the NDEF dispatch path.
         NdefRecord record = NdefRecord.createMime("text/plain", "test".getBytes());
@@ -1078,7 +1079,8 @@ public final class NfcDispatcherTest {
         // Assert that the method returns false, indicating failure.
         assertFalse(result);
         // Verify that the send method was called, which then threw the mocked exception.
-        verify(pendingIntent).send(any(Context.class), eq(Activity.RESULT_OK), any(Intent.class));
+        verify(pendingIntent).send(any(Context.class), eq(Activity.RESULT_OK), any(Intent.class),
+                isNull(), isNull(), isNull(), any(Bundle.class));
     }
 
     @Test
@@ -1087,7 +1089,7 @@ public final class NfcDispatcherTest {
         // Setup a pending intent that will fail by throwing CanceledException.
         PendingIntent pendingIntent = mock(PendingIntent.class);
         doThrow(new CanceledException()).when(pendingIntent)
-                .send(any(Context.class), anyInt(), any(Intent.class));
+                .send(any(Context.class), anyInt(), any(Intent.class), any(), any(), any(), any());
 
         // Setup a tag with NfcA tech to trigger the TECH dispatch path.
         Tag tag = mock(Tag.class);
@@ -1105,7 +1107,8 @@ public final class NfcDispatcherTest {
         // Assert that the method returns false, indicating failure.
         assertFalse(result);
         // Verify that the send method was called, which then threw the mocked exception.
-        verify(pendingIntent).send(any(Context.class), eq(Activity.RESULT_OK), any(Intent.class));
+        verify(pendingIntent).send(any(Context.class), eq(Activity.RESULT_OK), any(Intent.class),
+                isNull(), isNull(), isNull(), any(Bundle.class));
     }
 
     @Test
@@ -1114,7 +1117,7 @@ public final class NfcDispatcherTest {
         // Setup a pending intent that will fail by throwing CanceledException.
         PendingIntent pendingIntent = mock(PendingIntent.class);
         doThrow(new CanceledException()).when(pendingIntent)
-                .send(any(Context.class), anyInt(), any(Intent.class));
+                .send(any(Context.class), anyInt(), any(Intent.class), any(), any(), any(), any());
 
         // Setup a generic tag to trigger the TAG dispatch path.
         Tag tag = Tag.createMockTag(new byte[]{0x01}, new int[0], new Bundle[0], 0L);
@@ -1132,7 +1135,8 @@ public final class NfcDispatcherTest {
         // Assert that the method returns false, indicating failure.
         assertFalse(result);
         // Verify that the send method was called, which then threw the mocked exception.
-        verify(pendingIntent).send(any(Context.class), eq(Activity.RESULT_OK), any(Intent.class));
+        verify(pendingIntent).send(any(Context.class), eq(Activity.RESULT_OK), any(Intent.class),
+                isNull(), isNull(), isNull(), any(Bundle.class));
     }
 
     @Test
